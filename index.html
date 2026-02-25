@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мои тренировки 💪</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
             margin: 0;
@@ -47,22 +46,96 @@
             background: rgba(22, 33, 62, 0.8);
             border-radius: 20px;
             padding: 25px;
-            margin-bottom: 25px;            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);            border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
         .card h2 {
             color: #ffd700;
             margin-bottom: 20px;
             font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .stat-grid {
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .form-group .optional {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            width: 100%;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(238, 90, 36, 0.6);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .user-info {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .user-info .username {
+            font-size: 1.3rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -72,23 +145,18 @@
             padding: 15px;
             border-radius: 15px;
             text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
+            border: 1px solid rgba(255, 215, 0, 0.3);        }
 
         .stat-item .value {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #ffd700;
         }
 
         .stat-item .label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #aaa;
             margin-top: 5px;
-        }
-
-        .workout-list {
-            list-style: none;
         }
 
         .workout-item {
@@ -96,66 +164,86 @@
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 10px;
-            display: flex;            justify-content: space-between;
-            align-items: center;
             border-left: 4px solid #ffd700;
-            transition: transform 0.2s ease;
         }
 
-        .workout-item:hover {
-            transform: translateX(5px);
-            background: rgba(255, 255, 255, 0.08);
+        .workout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
-        .workout-info {
-            flex: 1;
-        }
-
-        .workout-info .exercise {
+        .workout-exercise {
             font-weight: bold;
             font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .workout-info .details {
-            color: #aaa;
-            font-size: 0.9rem;
+            color: #ffd700;
         }
 
         .workout-date {
-            color: #ffd700;
-            font-size: 0.9rem;
-            text-align: right;
+            color: #aaa;
+            font-size: 0.85rem;
         }
 
-        .chart-container {
-            position: relative;
-            height: 300px;
+        .workout-details {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            color: #ccc;
+            font-size: 0.95rem;
         }
 
-        .add-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
+        .btn-group {
+            display: flex;            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #aaa;
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            color: #fff;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;        }
+            text-align: center;
+        }
 
-        .add-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 20px rgba(238, 90, 36, 0.6);
+        .nav-tab.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+            color: #ffd700;
         }
 
         .modal {
             display: none;
-            position: fixed;
-            top: 0;
+            position: fixed;            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
@@ -184,30 +272,6 @@
             text-align: center;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #aaa;
-        }
-
-        .form-group input, .form-group select {            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #ffd700;
-        }
-
         .modal-buttons {
             display: flex;
             gap: 10px;
@@ -221,7 +285,6 @@
             border: none;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
         .btn-save {
@@ -229,47 +292,8 @@
             color: white;
         }
 
-        .btn-cancel {
-            background: rgba(255, 255, 255, 0.1);
+        .btn-cancel {            background: rgba(255, 255, 255, 0.1);
             color: #fff;
-        }
-
-        .btn-save:hover {
-            transform: scale(1.02);
-        }
-
-        .btn-cancel:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .empty-state {
-            text-align: center;            padding: 40px;
-            color: #aaa;
-        }
-
-        .empty-state .icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 2rem;
-            }
-            
-            .stat-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .workout-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .workout-date {
-                text-align: left;
-            }
         }
     </style>
 </head>
@@ -277,282 +301,367 @@
     <div class="container">
         <header>
             <h1>💪 Мои тренировки</h1>
-            <p>Трекер прогресса для девушки</p>
+            <p>Трекер прогресса</p>
         </header>
 
-        <!-- Статистика -->
-        <div class="card">
-            <h2>📊 Статистика</h2>
-            <div class="stat-grid">
-                <div class="stat-item">
-                    <div class="value" id="totalWorkouts">0</div>
-                    <div class="label">Тренировок</div>
+        <!-- Страница регистрации -->
+        <div id="registerPage" class="page active">
+            <div class="card">
+                <h2>🔐 Регистрация</h2>
+                <p style="color: #aaa; margin-bottom: 20px;">
+                    Введи свои данные для начала работы
+                </p>
+                
+                <div class="form-group">
+                    <label>Твой Telegram ник</label>
+                    <input type="text" id="regUsername" placeholder="@username">
                 </div>
-                <div class="stat-item">
-                    <div class="value" id="totalWeight">0</div>
-                    <div class="label">Всего кг</div>
+                
+                <div class="form-group">
+                    <label>Вес (кг) <span class="optional">— необязательно</span></label>
+                    <input type="number" id="regWeight" placeholder="55">
                 </div>
-                <div class="stat-item">                    <div class="value" id="lastDays">0</div>
-                    <div class="label">Дней подряд</div>
+                
+                <div class="form-group">
+                    <label>Рост (см) <span class="optional">— необязательно</span></label>
+                    <input type="number" id="regHeight" placeholder="165">
                 </div>
-                <div class="stat-item">
-                    <div class="value" id="maxWeight">0</div>
-                    <div class="label">Макс. вес</div>
+                
+                <button class="btn btn-primary" id="registerBtn">Зарегистрироваться</button>
+            </div>
+        </div>
+
+        <!-- Главная страница -->
+        <div id="mainPage" class="page">
+            <div class="user-info">
+                <span class="username" id="displayUsername">@username</span>
+            </div>
+
+            <div class="card">
+                <h2>📊 Статистика</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="value" id="totalWorkouts">0</div>                        <div class="label">Тренировок</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="value" id="totalReps">0</div>
+                        <div class="label">Всего повторений</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="value" id="totalSets">0</div>
+                        <div class="label">Всего подходов</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="value" id="lastDays">0</div>
+                        <div class="label">Дней подряд</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🏆 Последние результаты</h2>
+                <div id="recentWorkouts">
+                    <div class="empty-state">
+                        <div class="icon">🏋️</div>
+                        <p>Пока нет тренировок</p>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="addWorkoutBtn">+ Добавить тренировку</button>
+                    <button class="btn btn-secondary" id="historyBtn">📜 История</button>
                 </div>
             </div>
         </div>
 
-        <!-- График -->
-        <div class="card">
-            <h2>📈 Прогресс весов</h2>
-            <div class="chart-container">
-                <canvas id="weightChart"></canvas>
+        <!-- Страница истории -->
+        <div id="historyPage" class="page">
+            <div class="nav-tabs">
+                <div class="nav-tab" id="backToMain">🏠 Главная</div>
+                <div class="nav-tab active">📜 История</div>
             </div>
-        </div>
 
-        <!-- Список тренировок -->
-        <div class="card">
-            <h2>📋 История тренировок</h2>
-            <ul class="workout-list" id="workoutList">
-                <!-- Сюда добавляются тренировки -->
-            </ul>
-            <button class="add-btn" onclick="openModal()">+ Добавить тренировку</button>
+            <div class="card">
+                <h2>📜 История тренировок</h2>
+                <div id="workoutList"></div>
+            </div>
         </div>
     </div>
 
-    <!-- Модальное окно -->
-    <div class="modal" id="addModal">
-        <div class="modal-content">
-            <h2>Новая тренировка</h2>
+    <!-- Модальное окно: Тренировка -->
+    <div class="modal" id="workoutModal">
+        <div class="modal-content">            <h2>Новая тренировка</h2>
             <div class="form-group">
                 <label>Упражнение</label>
-                <select id="exercise">
-                    <option value="Жим лёжа">Жим лёжа</option>
-                    <option value="Приседания">Приседания</option>
-                    <option value="Тяга">Тяга</option>
-                    <option value="Подтягивания">Подтягивания</option>
-                    <option value="Планка">Планка</option>
-                    <option value="Другое">Другое</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Подходы</label>
-                <input type="number" id="sets" placeholder="3" min="1">
+                <input type="text" id="exercise" placeholder="Например: Отжимания">
             </div>
             <div class="form-group">
                 <label>Повторения</label>
-                <input type="number" id="reps" placeholder="10" min="1">            </div>
+                <input type="number" id="reps" placeholder="10" min="1">
+            </div>
             <div class="form-group">
-                <label>Вес (кг)</label>
-                <input type="number" id="weight" placeholder="50" min="0" step="0.5">
+                <label>Подходы <span class="optional">— необязательно</span></label>
+                <input type="number" id="sets" placeholder="3" min="1">
+            </div>
+            <div class="form-group">
+                <label>Вес (кг) <span class="optional">— необязательно</span></label>
+                <input type="number" id="weight" placeholder="0" min="0" step="0.5">
             </div>
             <div class="modal-buttons">
-                <button class="btn-cancel" onclick="closeModal()">Отмена</button>
-                <button class="btn-save" onclick="saveWorkout()">Сохранить</button>
+                <button class="btn-cancel" id="cancelWorkoutBtn">Отмена</button>
+                <button class="btn-save" id="saveWorkoutBtn">Сохранить</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Тестовые данные (пока нет базы данных)
-        let workouts = [
-            {
-                id: 1,
-                exercise: 'Жим лёжа',
-                sets: 3,
-                reps: 10,
-                weight: 40,
-                date: '2025-01-15'
-            },
-            {
-                id: 2,
-                exercise: 'Приседания',
-                sets: 4,
-                reps: 12,
-                weight: 50,
-                date: '2025-01-17'
-            },
-            {
-                id: 3,
-                exercise: 'Тяга',
-                sets: 3,
-                reps: 10,
-                weight: 45,
-                date: '2025-01-19'
-            },
-            {
-                id: 4,
-                exercise: 'Жим лёжа',
-                sets: 3,
-                reps: 10,
-                weight: 42.5,
-                date: '2025-01-22'
-            },
-            {
-                id: 5,
-                exercise: 'Приседания',                sets: 4,
-                reps: 12,
-                weight: 55,
-                date: '2025-01-24'
-            }
-        ];
+        // Глобальные переменные
+        let currentUser = null;
+        let workouts = [];
 
-        // Загрузка при старте
-        document.addEventListener('DOMContentLoaded', () => {
-            loadWorkouts();
-            updateStats();
-            renderChart();
+        // Инициализация при загрузке
+        window.addEventListener('load', function() {
+            console.log('Страница загружена');
+            loadUserData();
+            setupEventListeners();
         });
 
-        // Загрузка тренировок
-        function loadWorkouts() {
-            const list = document.getElementById('workoutList');
-            list.innerHTML = '';
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            console.log('Настройка обработчиков');
+            
+            // Регистрация
+            const registerBtn = document.getElementById('registerBtn');
+            if (registerBtn) {
+                registerBtn.addEventListener('click', register);
+                console.log('Кнопка регистрации найдена');
+            } else {
+                console.error('Кнопка регистрации не найдена!');
+            }
 
+            // Добавить тренировку            const addWorkoutBtn = document.getElementById('addWorkoutBtn');
+            if (addWorkoutBtn) {
+                addWorkoutBtn.addEventListener('click', function() {
+                    document.getElementById('workoutModal').classList.add('show');
+                });
+            }
+
+            // Сохранить тренировку
+            const saveWorkoutBtn = document.getElementById('saveWorkoutBtn');
+            if (saveWorkoutBtn) {
+                saveWorkoutBtn.addEventListener('click', saveWorkout);
+            }
+
+            // Отмена тренировки
+            const cancelWorkoutBtn = document.getElementById('cancelWorkoutBtn');
+            if (cancelWorkoutBtn) {
+                cancelWorkoutBtn.addEventListener('click', function() {
+                    document.getElementById('workoutModal').classList.remove('show');
+                });
+            }
+
+            // История
+            const historyBtn = document.getElementById('historyBtn');
+            if (historyBtn) {
+                historyBtn.addEventListener('click', function() {
+                    showPage('historyPage');
+                    loadHistory();
+                });
+            }
+
+            // Назад на главную
+            const backToMain = document.getElementById('backToMain');
+            if (backToMain) {
+                backToMain.addEventListener('click', function() {
+                    showPage('mainPage');
+                });
+            }
+
+            // Закрытие модального окна по клику вне
+            document.getElementById('workoutModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        }
+
+        // Загрузка данных пользователя
+        function loadUserData() {
+            try {
+                const savedUser = localStorage.getItem('workout_user');                const savedWorkouts = localStorage.getItem('workout_data');
+
+                console.log('Загрузка данных:', savedUser ? 'найдено' : 'не найдено');
+
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    workouts = savedWorkouts ? JSON.parse(savedWorkouts) : [];
+                    showPage('mainPage');
+                    updateUI();
+                } else {
+                    showPage('registerPage');
+                }
+            } catch (e) {
+                console.error('Ошибка загрузки:', e);
+                showPage('registerPage');
+            }
+        }
+
+        // Регистрация
+        function register() {
+            console.log('Кнопка регистрации нажата');
+            
+            const usernameInput = document.getElementById('regUsername');
+            const weightInput = document.getElementById('regWeight');
+            const heightInput = document.getElementById('regHeight');
+
+            if (!usernameInput || !weightInput || !heightInput) {
+                alert('Ошибка: поля не найдены!');
+                return;
+            }
+
+            const username = usernameInput.value.trim();
+            const weight = weightInput.value;
+            const height = heightInput.value;
+
+            console.log('Введённые данные:', username, weight, height);
+
+            if (!username) {
+                alert('Введи свой Telegram ник!');
+                return;
+            }
+
+            currentUser = {
+                username: username.startsWith('@') ? username : '@' + username,
+                weight: weight || null,
+                height: height || null,
+                registeredAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('workout_user', JSON.stringify(currentUser));            console.log('Данные сохранены:', currentUser);
+            
+            alert('✅ Регистрация успешна!');
+            showPage('mainPage');
+            updateUI();
+        }
+
+        // Обновление интерфейса
+        function updateUI() {
+            if (!currentUser) return;
+
+            document.getElementById('displayUsername').textContent = currentUser.username;
+            document.getElementById('totalWorkouts').textContent = workouts.length;
+            
+            const totalReps = workouts.reduce((sum, w) => sum + (w.reps || 0), 0);
+            document.getElementById('totalReps').textContent = totalReps;
+            
+            const totalSets = workouts.reduce((sum, w) => sum + (w.sets || 0), 0);
+            document.getElementById('totalSets').textContent = totalSets;
+            
+            const uniqueDays = new Set(workouts.map(w => w.date));
+            document.getElementById('lastDays').textContent = uniqueDays.size;
+
+            updateRecentWorkouts();
+        }
+
+        // Последние тренировки
+        function updateRecentWorkouts() {
+            const container = document.getElementById('recentWorkouts');
+            
             if (workouts.length === 0) {
-                list.innerHTML = `
+                container.innerHTML = `
                     <div class="empty-state">
                         <div class="icon">🏋️</div>
                         <p>Пока нет тренировок</p>
-                        <p>Добавь первую!</p>
                     </div>
                 `;
                 return;
             }
 
-            workouts.slice().reverse().forEach(workout => {
-                const li = document.createElement('li');
-                li.className = 'workout-item';
-                li.innerHTML = `
-                    <div class="workout-info">
-                        <div class="exercise">${workout.exercise}</div>
-                        <div class="details">${workout.sets} × ${workout.reps} × ${workout.weight} кг</div>
+            const recent = workouts.slice(-3).reverse();
+            container.innerHTML = recent.map(w => `
+                <div class="workout-item">
+                    <div class="workout-header">
+                        <span class="workout-exercise">${w.exercise}</span>
+                        <span class="workout-date">${new Date(w.date).toLocaleDateString('ru-RU')}</span>
                     </div>
-                    <div class="workout-date">${new Date(workout.date).toLocaleDateString('ru-RU')}</div>
+                    <div class="workout-details">
+                        <span>🔄 ${w.reps} повторений</span>
+                        ${w.sets ? `<span>📋 ${w.sets} подходов</span>` : ''}                        ${w.weight ? `<span>⚖️ ${w.weight} кг</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // История
+        function loadHistory() {
+            const list = document.getElementById('workoutList');
+            
+            if (workouts.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📜</div>
+                        <p>История пуста</p>
+                    </div>
                 `;
-                list.appendChild(li);
-            });
+                return;
+            }
+
+            list.innerHTML = workouts.slice().reverse().map(w => `
+                <div class="workout-item">
+                    <div class="workout-header">
+                        <span class="workout-exercise">${w.exercise}</span>
+                        <span class="workout-date">${new Date(w.date).toLocaleDateString('ru-RU')}</span>
+                    </div>
+                    <div class="workout-details">
+                        <span>🔄 ${w.reps} повторений</span>
+                        ${w.sets ? `<span>📋 ${w.sets} подходов</span>` : ''}
+                        ${w.weight ? `<span>⚖️ ${w.weight} кг</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // Обновление статистики
-        function updateStats() {
-            document.getElementById('totalWorkouts').textContent = workouts.length;
-            
-            const totalWeight = workouts.reduce((sum, w) => sum + (w.sets * w.reps * w.weight), 0);
-            document.getElementById('totalWeight').textContent = Math.round(totalWeight);            
-            const maxWeight = Math.max(...workouts.map(w => w.weight), 0);
-            document.getElementById('maxWeight').textContent = maxWeight;
-            
-            // Простой подсчёт дней подряд (для примера)
-            document.getElementById('lastDays').textContent = Math.min(workouts.length, 5);
+        // Навигация
+        function showPage(pageId) {
+            console.log('Переключение на:', pageId);
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
         }
 
-        // График
-        function renderChart() {
-            const ctx = document.getElementById('weightChart').getContext('2d');
-            
-            const sortedWorkouts = [...workouts].sort((a, b) => new Date(a.date) - new Date(b.date));
-            
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: sortedWorkouts.map(w => new Date(w.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })),
-                    datasets: [{
-                        label: 'Вес (кг)',
-                        data: sortedWorkouts.map(w => w.weight),
-                        borderColor: '#ffd700',
-                        backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.3,
-                        pointBackgroundColor: '#ffd700',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#aaa'
-                            }
-                        },                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#aaa'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Модальное окно
-        function openModal() {
-            document.getElementById('addModal').classList.add('show');
-        }
-
-        function closeModal() {
-            document.getElementById('addModal').classList.remove('show');
-            // Очистка полей
-            document.getElementById('exercise').value = 'Жим лёжа';
-            document.getElementById('sets').value = '';
-            document.getElementById('reps').value = '';
-            document.getElementById('weight').value = '';
-        }
-
-        // Сохранение тренировки
+        // Сохранить тренировку
         function saveWorkout() {
-            const exercise = document.getElementById('exercise').value;
-            const sets = parseInt(document.getElementById('sets').value);
+            const exercise = document.getElementById('exercise').value.trim();
             const reps = parseInt(document.getElementById('reps').value);
-            const weight = parseFloat(document.getElementById('weight').value);
+            const sets = document.getElementById('sets').value ? parseInt(document.getElementById('sets').value) : null;
+            const weight = document.getElementById('weight').value ? parseFloat(document.getElementById('weight').value) : null;
 
-            if (!sets || !reps || !weight) {
-                alert('Заполни все поля!');
+            if (!exercise || !reps) {                alert('Заполни название упражнения и повторения!');
                 return;
             }
 
             const newWorkout = {
                 id: Date.now(),
                 exercise,
-                sets,
                 reps,
+                sets,
                 weight,
-                date: new Date().toISOString().split('T')[0]
+                date: new Date().toISOString()
             };
 
             workouts.push(newWorkout);
-                        // Сохранение в localStorage (временное решение до базы данных)
-            localStorage.setItem('workouts', JSON.stringify(workouts));
+            localStorage.setItem('workout_data', JSON.stringify(workouts));
             
-            loadWorkouts();
-            updateStats();
-            closeModal();
+            updateUI();
+            document.getElementById('workoutModal').classList.remove('show');
+            
+            // Очистка полей
+            document.getElementById('exercise').value = '';
+            document.getElementById('reps').value = '';
+            document.getElementById('sets').value = '';
+            document.getElementById('weight').value = '';
             
             alert('✅ Тренировка добавлена!');
         }
-
-        // Закрытие модального окна по клику вне
-        document.getElementById('addModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('addModal')) {
-                closeModal();
-            }
-        });
     </script>
 </body>
 </html>
