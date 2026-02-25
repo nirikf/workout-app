@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои тренировки 💪</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #ffd700;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        .user-info {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .user-info .username {
+            font-size: 1.3rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .card {
+            background: rgba(22, 33, 62, 0.8);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+        .form-group .optional {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            width: 100%;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #4caf50, #45a049);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(238, 90, 36, 0.6);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-item .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-item .label {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        .exercise-list {
+            list-style: none;
+        }
+
+        .exercise-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .exercise-name {            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .exercise-last-result {
+            background: rgba(255, 215, 0, 0.15);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .exercise-last-result .label {
+            color: #aaa;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .exercise-last-result .value {
+            color: #ffd700;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .exercise-stats {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .exercise-stat {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .exercise-stat strong {
+            color: #ffd700;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-group .btn {            flex: 1;
+            min-width: 120px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {            background: #16213e;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            border: 2px solid #ffd700;
+        }
+
+        .modal-content h2 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: linear-gradient(45deg, #4caf50, #45a049);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #aaa;
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+        .history-list {
+            list-style: none;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ffd700;
+        }
+
+        .history-date {
+            color: #aaa;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .history-details {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            color: #ccc;
+        }
+
+        .bot-info {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .bot-info a {
+            color: #4caf50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .btn-group {                flex-direction: column;
+            }
+            
+            .btn-group .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💪 Мои тренировки</h1>
+            <p>Трекер прогресса</p>
+        </header>
+
+        <!-- Страница регистрации -->
+        <div id="registerPage" class="page active">
+            <div class="card">
+                <h2>🔐 Регистрация</h2>
+                <p style="color: #aaa; margin-bottom: 20px;">
+                    Введи свои данные для начала работы
+                </p>
+                
+                <div class="bot-info">
+                    📱 Telegram бот: <a href="https://t.me/ultramegabot69" target="_blank">@ultramegabot69</a>
+                </div>
+                
+                <div class="form-group">
+                    <label>Твой Telegram ник</label>
+                    <input type="text" id="regUsername" placeholder="@username">
+                </div>
+                
+                <div class="form-group">
+                    <label>Вес (кг) <span class="optional">— необязательно</span></label>
+                    <input type="number" id="regWeight" placeholder="55">
+                </div>
+                
+                <div class="form-group">
+                    <label>Рост (см) <span class="optional">— необязательно</span></label>
+                    <input type="number" id="regHeight" placeholder="165">
+                </div>
+                
+                <button class="btn btn-primary" id="registerBtn">Зарегистрироваться</button>
+            </div>
+        </div>
+
+        <!-- Главная страница -->
+        <div id="mainPage" class="page">
+            <div class="user-info">                <span class="username" id="displayUsername">@username</span>
+            </div>
+
+            <div class="bot-info">
+                📱 Бот: <a href="https://t.me/ultramegabot69" target="_blank">@ultramegabot69</a>
+            </div>
+
+            <div class="card">
+                <h2>📊 Общая статистика</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="value" id="totalExercises">0</div>
+                        <div class="label">Упражнений</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="value" id="totalWorkouts">0</div>
+                        <div class="label">Тренировок</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="value" id="totalReps">0</div>
+                        <div class="label">Всего повторений</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="value" id="activeDays">0</div>
+                        <div class="label">Дней активно</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🏋️ Мои упражнения</h2>
+                <div id="exercisesList">
+                    <div class="empty-state">
+                        <div class="icon">🏋️</div>
+                        <p>Пока нет упражнений</p>
+                        <p>Добавь первое!</p>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="addExerciseBtn">+ Добавить упражнение</button>
+                    <button class="btn btn-secondary" id="historyBtn">📜 История</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Страница истории -->
+        <div id="historyPage" class="page">
+            <div class="nav-tabs">
+                <div class="nav-tab" id="backToMain">🏠 Главная</div>                <div class="nav-tab active">📜 История</div>
+            </div>
+
+            <div class="card">
+                <h2>📜 Вся история тренировок</h2>
+                <div id="fullHistoryList">
+                    <div class="empty-state">
+                        <div class="icon">📜</div>
+                        <p>История пуста</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Добавить упражнение -->
+    <div class="modal" id="exerciseModal">
+        <div class="modal-content">
+            <h2>Новое упражнение</h2>
+            <div class="form-group">
+                <label>Название упражнения</label>
+                <input type="text" id="exerciseName" placeholder="Например: Отжимания">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-cancel" id="cancelExerciseBtn">Отмена</button>
+                <button class="btn-save" id="saveExerciseBtn">Создать</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Добавить результат -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h2>Новый результат</h2>
+            <p id="resultExerciseName" style="color: #ffd700; text-align: center; margin-bottom: 20px;"></p>
+            
+            <div class="form-group">
+                <label>Повторения</label>
+                <input type="number" id="resultReps" placeholder="10" min="1">
+            </div>
+            <div class="form-group">
+                <label>Подходы <span class="optional">— необязательно</span></label>
+                <input type="number" id="resultSets" placeholder="3" min="1">
+            </div>
+            <div class="form-group">
+                <label>Вес (кг) <span class="optional">— необязательно</span></label>
+                <input type="number" id="resultWeight" placeholder="0" min="0" step="0.5">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-cancel" id="cancelResultBtn">Отмена</button>                <button class="btn-save" id="saveResultBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== КОНФИГУРАЦИЯ ====================
+        const CONFIG = {
+            BOT_USERNAME: '@ultramegabot69',
+            BOT_URL: 'https://t.me/ultramegabot69',
+            API_URL: '', // Будет заполнено при подключении к базе данных
+            API_KEY: ''  // Будет заполнено при подключении к базе данных
+        };
+
+        // ==================== ДАННЫЕ ====================
+        let currentUser = null;
+        let exercises = []; // [{id, name, results: [{id, reps, sets, weight, date}]}]
+
+        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+        window.addEventListener('load', function() {
+            console.log('🚀 Приложение загружено');
+            loadUserData();
+            setupEventListeners();
+        });
+
+        // ==================== ОБРАБОТЧИКИ СОБЫТИЙ ====================
+        function setupEventListeners() {
+            // Регистрация
+            document.getElementById('registerBtn')?.addEventListener('click', register);
+            
+            // Добавить упражнение
+            document.getElementById('addExerciseBtn')?.addEventListener('click', () => {
+                openModal('exerciseModal');
+            });
+            
+            // Сохранить упражнение
+            document.getElementById('saveExerciseBtn')?.addEventListener('click', saveExercise);
+            
+            // Отмена упражнения
+            document.getElementById('cancelExerciseBtn')?.addEventListener('click', () => {
+                closeModal('exerciseModal');
+            });
+            
+            // Сохранить результат
+            document.getElementById('saveResultBtn')?.addEventListener('click', saveResult);
+            
+            // Отмена результата
+            document.getElementById('cancelResultBtn')?.addEventListener('click', () => {
+                closeModal('resultModal');
+            });            
+            // История
+            document.getElementById('historyBtn')?.addEventListener('click', () => {
+                showPage('historyPage');
+                loadFullHistory();
+            });
+            
+            // Назад на главную
+            document.getElementById('backToMain')?.addEventListener('click', () => {
+                showPage('mainPage');
+            });
+            
+            // Закрытие модальных окон по клику вне
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(modal.id);
+                    }
+                });
+            });
+        }
+
+        // ==================== РЕГИСТРАЦИЯ ====================
+        function loadUserData() {
+            try {
+                const savedUser = localStorage.getItem('workout_user');
+                const savedExercises = localStorage.getItem('workout_exercises');
+
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    exercises = savedExercises ? JSON.parse(savedExercises) : [];
+                    showPage('mainPage');
+                    updateUI();
+                } else {
+                    showPage('registerPage');
+                }
+            } catch (e) {
+                console.error('❌ Ошибка загрузки:', e);
+                showPage('registerPage');
+            }
+        }
+
+        function register() {
+            const username = document.getElementById('regUsername')?.value.trim();
+            const weight = document.getElementById('regWeight')?.value;
+            const height = document.getElementById('regHeight')?.value;
+
+            if (!username) {
+                alert('⚠️ Введи свой Telegram ник!');
+                return;            }
+
+            currentUser = {
+                username: username.startsWith('@') ? username : '@' + username,
+                weight: weight || null,
+                height: height || null,
+                registeredAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('workout_user', JSON.stringify(currentUser));
+            
+            // TODO: Отправить данные в бота при подключении
+            // await sendToBot('register', currentUser);
+            
+            alert('✅ Регистрация успешна!');
+            showPage('mainPage');
+            updateUI();
+        }
+
+        // ==================== ИНТЕРФЕЙС ====================
+        function updateUI() {
+            if (!currentUser) return;
+
+            document.getElementById('displayUsername').textContent = currentUser.username;
+            
+            // Статистика
+            document.getElementById('totalExercises').textContent = exercises.length;
+            
+            const totalWorkouts = exercises.reduce((sum, ex) => sum + ex.results.length, 0);
+            document.getElementById('totalWorkouts').textContent = totalWorkouts;
+            
+            const totalReps = exercises.reduce((sum, ex) => 
+                sum + ex.results.reduce((s, r) => s + (r.reps || 0), 0), 0
+            );
+            document.getElementById('totalReps').textContent = totalReps;
+            
+            const uniqueDays = new Set(
+                exercises.flatMap(ex => ex.results.map(r => r.date.split('T')[0]))
+            );
+            document.getElementById('activeDays').textContent = uniqueDays.size;
+
+            // Список упражнений
+            renderExercises();
+        }
+
+        function renderExercises() {
+            const container = document.getElementById('exercisesList');
+            
+            if (exercises.length === 0) {
+                container.innerHTML = `                    <div class="empty-state">
+                        <div class="icon">🏋️</div>
+                        <p>Пока нет упражнений</p>
+                        <p>Добавь первое!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = exercises.map(ex => {
+                const lastResult = ex.results[ex.results.length - 1];
+                
+                return `
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-name">${ex.name}</span>
+                            <button class="btn btn-success" onclick="openResultModal('${ex.id}')" style="padding: 8px 15px; font-size: 0.9rem;">
+                                + Результат
+                            </button>
+                        </div>
+                        
+                        ${lastResult ? `
+                            <div class="exercise-last-result">
+                                <div class="label">Последний результат:</div>
+                                <div class="value">
+                                    🔄 ${lastResult.reps} повторений
+                                    ${lastResult.sets ? `| 📋 ${lastResult.sets} подходов` : ''}
+                                    ${lastResult.weight ? `| ⚖️ ${lastResult.weight} кг` : ''}
+                                </div>
+                                <div class="label" style="margin-top: 5px;">
+                                    📅 ${new Date(lastResult.date).toLocaleDateString('ru-RU')}
+                                </div>
+                            </div>
+                        ` : '<p style="color: #aaa;">Пока нет результатов</p>'}
+                        
+                        <div class="exercise-stats">
+                            <span class="exercise-stat">Всего тренировок: <strong>${ex.results.length}</strong></span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadFullHistory() {
+            const container = document.getElementById('fullHistoryList');
+            
+            const allResults = exercises.flatMap(ex => 
+                ex.results.map(r => ({
+                    exerciseName: ex.name,
+                    ...r                }))
+            ).sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (allResults.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📜</div>
+                        <p>История пуста</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `<ul class="history-list">` + allResults.map(r => `
+                <li class="history-item">
+                    <div class="history-date">📅 ${new Date(r.date).toLocaleDateString('ru-RU', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })}</div>
+                    <div style="color: #ffd700; font-weight: bold; margin-bottom: 8px;">${r.exerciseName}</div>
+                    <div class="history-details">
+                        <span>🔄 ${r.reps} повторений</span>
+                        ${r.sets ? `<span>📋 ${r.sets} подходов</span>` : ''}
+                        ${r.weight ? `<span>⚖️ ${r.weight} кг</span>` : ''}
+                    </div>
+                </li>
+            `).join('') + `</ul>`;
+        }
+
+        // ==================== УПРАВЛЕНИЕ СТРАНИЦАМИ ====================
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId)?.classList.add('active');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId)?.classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId)?.classList.remove('show');
+            
+            // Очистка полей
+            if (modalId === 'exerciseModal') {
+                document.getElementById('exerciseName').value = '';
+            } else if (modalId === 'resultModal') {
+                document.getElementById('resultReps').value = '';                document.getElementById('resultSets').value = '';
+                document.getElementById('resultWeight').value = '';
+            }
+        }
+
+        // ==================== УПРАВЛЕНИЕ УПРАЖНЕНИЯМИ ====================
+        function saveExercise() {
+            const name = document.getElementById('exerciseName')?.value.trim();
+
+            if (!name) {
+                alert('⚠️ Введи название упражнения!');
+                return;
+            }
+
+            const newExercise = {
+                id: 'ex_' + Date.now(),
+                name: name,
+                results: [],
+                createdAt: new Date().toISOString()
+            };
+
+            exercises.push(newExercise);
+            saveData();
+            closeModal('exerciseModal');
+            updateUI();
+            
+            alert('✅ Упражнение добавлено!');
+        }
+
+        // Глобальная функция для открытия модального окна результата
+        window.openResultModal = function(exerciseId) {
+            const exercise = exercises.find(ex => ex.id === exerciseId);
+            if (!exercise) return;
+            
+            document.getElementById('resultExerciseName').textContent = exercise.name;
+            document.getElementById('resultModal').dataset.exerciseId = exerciseId;
+            openModal('resultModal');
+        };
+
+        function saveResult() {
+            const exerciseId = document.getElementById('resultModal').dataset.exerciseId;
+            const reps = parseInt(document.getElementById('resultReps')?.value);
+            const sets = document.getElementById('resultSets')?.value ? parseInt(document.getElementById('resultSets').value) : null;
+            const weight = document.getElementById('resultWeight')?.value ? parseFloat(document.getElementById('resultWeight').value) : null;
+
+            if (!reps) {
+                alert('⚠️ Введи количество повторений!');
+                return;
+            }
+            const exercise = exercises.find(ex => ex.id === exerciseId);
+            if (!exercise) return;
+
+            const newResult = {
+                id: 'res_' + Date.now(),
+                reps,
+                sets,
+                weight,
+                date: new Date().toISOString()
+            };
+
+            exercise.results.push(newResult);
+            saveData();
+            closeModal('resultModal');
+            updateUI();
+            
+            // TODO: Отправить результат в бота при подключении
+            // await sendToBot('new_result', { exercise: exercise.name, ...newResult });
+            
+            alert('✅ Результат сохранён!');
+        }
+
+        // ==================== СОХРАНЕНИЕ ДАННЫХ ====================
+        function saveData() {
+            localStorage.setItem('workout_exercises', JSON.stringify(exercises));
+        }
+
+        // ==================== ИНТЕГРАЦИЯ С БОТОМ (ГОТОВО К ПОДКЛЮЧЕНИЮ) ====================
+        async function sendToBot(action, data) {
+            // Эта функция будет активирована при подключении к базе данных
+            console.log('📤 Отправка в бота:', action, data);
+            
+            // Пример того, как будет выглядеть отправка:
+            /*
+            const response = await fetch(CONFIG.API_URL + '/telegram/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + CONFIG.API_KEY
+                },
+                body: JSON.stringify({
+                    action: action,
+                    user: currentUser.username,
+                    data: data
+                })
+            });
+            */
+        }
+
+        // ==================== ЭКСПОРТ ДАННЫХ (ДЛЯ БУДУЩЕЙ МИГРАЦИИ) ====================        function exportData() {
+            return {
+                user: currentUser,
+                exercises: exercises,
+                exportedAt: new Date().toISOString()
+            };
+        }
+
+        // ==================== ИМПОРТ ДАННЫХ (ДЛЯ БУДУЩЕЙ МИГРАЦИИ) ====================
+        function importData(data) {
+            if (data.user) {
+                currentUser = data.user;
+                localStorage.setItem('workout_user', JSON.stringify(currentUser));
+            }
+            if (data.exercises) {
+                exercises = data.exercises;
+                saveData();
+            }
+            updateUI();
+        }
+    </script>
+</body>
+  </html>
