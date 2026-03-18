@@ -10,18 +10,6 @@
     <meta name="robots" content="index, follow">
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
-    // ==================== TELEGRAM WEB APP ====================
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand(); // Раскрыть на весь экран
-
-// Получаем данные пользователя из Telegram
-const user = tg.initDataUnsafe?.user;
-if (user) {
-    console.log('Пользователь Telegram:', user.first_name, user.username);
-    // Можно автоматически подставлять номер если есть
-}
 
     <style>
         /* Адаптация под тему Telegram */
