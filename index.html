@@ -863,6 +863,18 @@ body {
         const HISTORY_KEY = 'phoneinfo_history';
         let paymentClicked = false;
 
+        // ==================== TELEGRAM WEB APP ====================
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand(); // Раскрыть на весь экран
+
+// Получаем данные пользователя из Telegram
+const user = tg.initDataUnsafe?.user;
+if (user) {
+    console.log('Пользователь Telegram:', user.first_name, user.username);
+    // Можно автоматически подставлять номер если есть
+}
+
         // ==================== КЭШИРОВАНИЕ ====================
         function getCachedResult(phone) {
             const key = CACHE_PREFIX + phone;
