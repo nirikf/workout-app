@@ -4,42 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- ==================== SEO ОПТИМИЗАЦИЯ ==================== -->
+    <!-- SEO ОПТИМИЗАЦИЯ -->
     <title>PhoneInfo - Узнать информацию по номеру телефона | Проверка на мошенников</title>
-    <meta name="description" content="Узнать информацию по номеру телефона +7. Проверка номера на мошенников, спам, базу данных. Определить оператора, регион, владельца номера. Сервис №1 в России.">
-    <meta name="keywords" content="номер телефона, определить номер, кто звонил, мошенники, спам, база номеров, проверить номер, оператор связи, регион номера, телефонный мошенник, неизвестный номер, определитель номера, пробив номера, информация о номере, +7 номер, российский номер">
+    <meta name="description" content="Узнать информацию по номеру телефона +7. Проверка номера на мошенников, спам, базу данных.">
+    <meta name="keywords" content="номер телефона, мошенники, спам, база номеров, проверить номер, оператор связи">
     <meta name="robots" content="index, follow">
-    <meta name="author" content="PhoneInfo">
-    
-    <!-- Open Graph для соцсетей -->
-    <meta property="og:title" content="PhoneInfo - Узнать информацию по номеру телефона">
-    <meta property="og:description" content="Проверка номера на мошенников и спам. Определить оператора и регион.">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ru_RU">
-    
-    <!-- Schema.org разметка -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "PhoneInfo",
-        "description": "Сервис проверки информации по номеру телефона",
-        "applicationCategory": "Utility",
-        "operatingSystem": "All",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "RUB"
-        }
-    }
-    </script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -47,10 +19,8 @@
             min-height: 100vh;
             padding: 20px;
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+
+        .container { max-width: 900px; margin: 0 auto; }
 
         header {
             text-align: center;
@@ -64,10 +34,7 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
+        header p { font-size: 1.2rem; opacity: 0.9; }
 
         .search-box {
             background: white;
@@ -77,13 +44,10 @@
             margin-bottom: 30px;
         }
 
-        .input-group {
-            margin-bottom: 20px;
-        }
+        .input-group { margin-bottom: 20px; }
 
         .input-group label {
-            display: block;
-            margin-bottom: 8px;
+            display: block;            margin-bottom: 8px;
             color: #555;
             font-weight: 600;
         }
@@ -96,6 +60,7 @@
             font-size: 1.1rem;
             transition: all 0.3s;
         }
+
         .input-group input:focus {
             outline: none;
             border-color: #667eea;
@@ -120,11 +85,8 @@
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        .search-btn:active {
-            transform: translateY(0);
-        }
+        .search-btn:active { transform: translateY(0); }
 
-        /* ==================== РЕКЛАМНЫЕ БЛОКИ ==================== */
         .ad-container {
             background: white;
             border-radius: 15px;
@@ -134,8 +96,7 @@
             text-align: center;
         }
 
-        .ad-label {
-            font-size: 0.75rem;
+        .ad-label {            font-size: 0.75rem;
             color: #999;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -145,7 +106,8 @@
         .ad-placeholder {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             border: 2px dashed #667eea;
-            border-radius: 10px;            padding: 40px 20px;
+            border-radius: 10px;
+            padding: 40px 20px;
             color: #667eea;
             font-size: 1.1rem;
             font-weight: 600;
@@ -157,7 +119,6 @@
             margin-top: 5px;
         }
 
-        /* ==================== ЗАГРУЗКА С РЕКЛАМОЙ ==================== */
         .loading {
             text-align: center;
             padding: 40px;
@@ -168,9 +129,7 @@
             margin-bottom: 30px;
         }
 
-        .loading.show {
-            display: block;
-        }
+        .loading.show { display: block; }
 
         .spinner {
             border: 4px solid #f3f3f3;
@@ -186,27 +145,11 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .loading-text { color: #666; font-size: 1.1rem; }
+        .loading-time { color: #999; font-size: 0.9rem; margin-top: 10px; }
+        .loading-ad { margin-top: 30px; padding-top: 20px; border-top: 2px solid #f0f0f0; }
 
-        .loading-text {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .loading-time {
-            color: #999;
-            font-size: 0.9rem;            margin-top: 10px;
-        }
-
-        .loading-ad {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #f0f0f0;
-        }
-
-        /* ==================== РЕЗУЛЬТАТЫ ==================== */
-        .result-section {
-            margin-bottom: 30px;
-        }
+        .result-section { margin-bottom: 30px; }
 
         .result-box {
             background: white;
@@ -222,14 +165,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title {
@@ -242,14 +179,8 @@
             gap: 10px;
         }
 
-        .legal-title {
-            color: #10b981;            border-color: #10b981;
-        }
-
-        .test-title {
-            color: #667eea;
-            border-color: #667eea;
-        }
+        .legal-title { color: #10b981; border-color: #10b981; }
+        .test-title { color: #667eea; border-color: #667eea; }
 
         .result-item {
             margin-bottom: 20px;
@@ -260,13 +191,10 @@
             transition: transform 0.2s;
         }
 
-        .result-item:hover {
-            transform: translateX(5px);
-        }
+        .result-item:hover { transform: translateX(5px); }
 
         .result-item label {
-            display: block;
-            color: #666;
+            display: block;            color: #666;
             font-size: 0.9rem;
             margin-bottom: 5px;
             text-transform: uppercase;
@@ -292,25 +220,15 @@
         .badge {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: 20px;            font-size: 0.85rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
             margin-left: 10px;
         }
 
-        .badge-legal {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .badge-test {
-            background: #e0e7ff;
-            color: #3730a3;
-        }
-
-        .badge-premium {
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            color: #000;
-        }
+        .badge-legal { background: #d1fae5; color: #065f46; }
+        .badge-test { background: #e0e7ff; color: #3730a3; }
+        .badge-premium { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
 
         .error {
             background: #fee;
@@ -321,14 +239,11 @@
             display: none;
         }
 
-        .error.show {
-            display: block;
-        }
+        .error.show { display: block; }
 
         .info-note {
             background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
+            border-left: 4px solid #ffc107;            padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
             color: #856404;
@@ -342,6 +257,7 @@
             color: white;
             box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
         }
+
         .service-info h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
@@ -350,10 +266,7 @@
             gap: 10px;
         }
 
-        .service-info ul {
-            list-style: none;
-            padding: 0;
-        }
+        .service-info ul { list-style: none; padding: 0; }
 
         .service-info li {
             padding: 12px 0;
@@ -363,24 +276,11 @@
             gap: 12px;
         }
 
-        .service-info li:last-child {
-            border-bottom: none;
-        }
+        .service-info li:last-child { border-bottom: none; }
+        .service-info li .icon { font-size: 1.3rem; min-width: 25px; }
+        .service-info li .text { line-height: 1.5; }
+        .service-info li .text strong { color: #ffd700; }
 
-        .service-info li .icon {
-            font-size: 1.3rem;
-            min-width: 25px;
-        }
-
-        .service-info li .text {
-            line-height: 1.5;
-        }
-
-        .service-info li .text strong {
-            color: #ffd700;
-        }
-
-        /* ==================== РАЗМЫТИЕ ==================== */
         .blurred-content {
             filter: blur(8px);
             user-select: none;
@@ -390,12 +290,10 @@
 
         .blurred-content.unblurred {
             filter: blur(0);
-            pointer-events: auto;            user-select: auto;
+            pointer-events: auto;
+            user-select: auto;
         }
-
-        .blur-container {
-            position: relative;
-        }
+        .blur-container { position: relative; }
 
         .unblur-overlay {
             position: absolute;
@@ -437,15 +335,13 @@
             box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
         }
 
-        .unblur-button:active {
-            transform: scale(0.98);
-        }
+        .unblur-button:active { transform: scale(0.98); }
+
         .unblur-info {
             background: rgba(0, 0, 0, 0.7);
             color: white;
             padding: 15px 25px;
-            border-radius: 10px;
-            font-size: 0.95rem;
+            border-radius: 10px;            font-size: 0.95rem;
             text-align: center;
             max-width: 400px;
         }
@@ -458,15 +354,10 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-            }
-            50% {
-                box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
-            }
+            0%, 100% { box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+            50% { box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6); }
         }
 
-        /* ==================== ПЛАТЕЖНОЕ ОКНО ==================== */
         .payment-modal {
             display: none;
             position: fixed;
@@ -480,15 +371,14 @@
             align-items: center;
         }
 
-        .payment-modal.show {
-            display: flex;
-        }
+        .payment-modal.show { display: flex; }
 
         .payment-content {
             background: white;
             padding: 40px;
             border-radius: 20px;
-            width: 90%;            max-width: 500px;
+            width: 90%;
+            max-width: 500px;
             text-align: center;
             animation: slideIn 0.3s ease;
         }
@@ -500,8 +390,7 @@
         }
 
         .payment-content .price {
-            font-size: 3rem;
-            font-weight: bold;
+            font-size: 3rem;            font-weight: bold;
             color: #10b981;
             margin: 20px 0;
         }
@@ -537,7 +426,8 @@
             border: none;
             border-radius: 15px;
             font-size: 1.3rem;
-            font-weight: bold;            cursor: pointer;
+            font-weight: bold;
+            cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 15px;
         }
@@ -547,12 +437,9 @@
             box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
         }
 
-        .pay-btn:active {
-            transform: translateY(0);
-        }
+        .pay-btn:active { transform: translateY(0); }
 
-        .cancel-btn {
-            background: transparent;
+        .cancel-btn {            background: transparent;
             color: #999;
             border: 2px solid #ddd;
             padding: 12px 30px;
@@ -583,10 +470,10 @@
             font-size: 1.5rem;
         }
 
-        /* ==================== ПОДТВЕРЖДЕНИЕ ОПЛАТЫ ==================== */
         .success-message {
             display: none;
-            text-align: center;            padding: 40px;
+            text-align: center;
+            padding: 40px;
         }
 
         .success-message.show {
@@ -601,8 +488,7 @@
 
         .success-message h2 {
             color: #10b981;
-            font-size: 2rem;
-            margin-bottom: 15px;
+            font-size: 2rem;            margin-bottom: 15px;
         }
 
         .success-message p {
@@ -625,37 +511,14 @@
         }
 
         @media (max-width: 600px) {
-            header h1 {
-                font-size: 2rem;
-            }
-            
-            .search-box, .result-box, .loading {
-                padding: 25px;
-            }
-            
-            .unblur-button {
-                padding: 15px 30px;
-                font-size: 1rem;            }
-
-            .service-info {
-                padding: 20px;
-            }
-
-            .service-info h3 {
-                font-size: 1.4rem;
-            }
-
-            .service-info li {
-                font-size: 0.9rem;
-            }
-
-            .payment-content {
-                padding: 25px;
-            }
-
-            .payment-content .price {
-                font-size: 2.5rem;
-            }
+            header h1 { font-size: 2rem; }
+            .search-box, .result-box, .loading { padding: 25px; }
+            .unblur-button { padding: 15px 30px; font-size: 1rem; }
+            .service-info { padding: 20px; }
+            .service-info h3 { font-size: 1.4rem; }
+            .service-info li { font-size: 0.9rem; }
+            .payment-content { padding: 25px; }
+            .payment-content .price { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -666,7 +529,6 @@
             <p>Сервис №1 по поиску информации о номере телефона</p>
         </header>
 
-        <!-- Информация о сервисе -->
         <div class="service-info">
             <h3>
                 🏆 PhoneInfo — Сервис номер один
@@ -675,31 +537,31 @@
             <ul>
                 <li>
                     <span class="icon">🔍</span>
-                    <span class="text">
-                        <strong>Поиск в открытых источниках:</strong> Сервис ищет данные в интернете, поэтому информация может быть не точной или устаревшей.
+                    <span class="text">                        <strong>Поиск в открытых источниках:</strong> Сервис ищет данные в интернете, поэтому информация может быть не точной.
                     </span>
                 </li>
                 <li>
                     <span class="icon">🇷🇺</span>
                     <span class="text">
-                        <strong>Только российские номера:</strong> Поддерживаются исключительно номера России (+7). Номера других стран не обрабатываются.
+                        <strong>Только российские номера:</strong> Поддерживаются исключительно номера России (+7).
                     </span>
-                </li>                <li>
+                </li>
+                <li>
                     <span class="icon">🔄</span>
                     <span class="text">
-                        <strong>Пересечение номеров:</strong> Новые номера могут путаться со старыми их версиями. Операторы иногда перевыпускают старые номера.
+                        <strong>Пересечение номеров:</strong> Новые номера могут путаться со старыми версиями.
                     </span>
                 </li>
                 <li>
                     <span class="icon">⚡</span>
                     <span class="text">
-                        <strong>Быстрый поиск:</strong> Среднее время поиска составляет 5-10 секунд в зависимости от загруженности серверов.
+                        <strong>Быстрый поиск:</strong> Среднее время поиска 5-10 секунд.
                     </span>
                 </li>
                 <li>
                     <span class="icon">🔒</span>
                     <span class="text">
-                        <strong>Безопасность:</strong> Все запросы анонимны и не сохраняются на сервере. Мы не храним историю поисков.
+                        <strong>Безопасность:</strong> Все запросы анонимны и не сохраняются.
                     </span>
                 </li>
             </ul>
@@ -713,35 +575,32 @@
                 <input type="tel" id="phone" placeholder="+7 (999) 999-99-99">
             </div>
             
-            <button class="search-btn" onclick="searchPhone()">
+            <button class="search-btn" id="searchBtn">
                 🔍 Найти информацию
             </button>
         </div>
 
-        <!-- ==================== РЕКЛАМА ПОСЛЕ ПОИСКА ==================== -->
         <div class="ad-container">
             <div class="ad-label">Реклама</div>
             <div class="ad-placeholder">
                 <div>Место для рекламы (Яндекс.Директ / VK Реклама)</div>
-                <div class="ad-size">Рекомендуемый размер: 728×90 или 300×250</div>
+                <div class="ad-size">Рекомендуемый размер: 728×90</div>
             </div>
         </div>
-
         <div class="loading" id="loading">
             <div class="spinner"></div>
             <div class="loading-text">Поиск информации...</div>
-            <div class="loading-time" id="loadingTime">Осталось времени: <span id="countdown">0</span> сек</div>
+            <div class="loading-time">Осталось времени: <span id="countdown">0</span> сек</div>
             
-            <!-- Реклама во время загрузки -->
-            <div class="loading-ad">                <div class="ad-label">Реклама во время ожидания</div>
+            <div class="loading-ad">
+                <div class="ad-label">Реклама во время ожидания</div>
                 <div class="ad-placeholder">
-                    <div>Место для рекламы (Яндекс.Директ / VK Реклама)</div>
-                    <div class="ad-size">Рекомендуемый размер: 468×60 или 320×100</div>
+                    <div>Место для рекламы</div>
+                    <div class="ad-size">Рекомендуемый размер: 468×60</div>
                 </div>
             </div>
         </div>
 
-        <!-- Легальная информация -->
         <div class="result-section legal-section" id="legalSection">
             <div class="result-box" id="legalResult">
                 <h2 class="section-title legal-title">
@@ -753,22 +612,18 @@
                     <label>📡 Оператор связи</label>
                     <div class="value" id="legalOperator">-</div>
                 </div>
-
                 <div class="result-item">
                     <label>🌍 Регион регистрации</label>
                     <div class="value" id="legalRegion">-</div>
                 </div>
-
                 <div class="result-item">
                     <label>📞 Тип номера</label>
                     <div class="value" id="numberType">-</div>
                 </div>
-
                 <div class="result-item">
                     <label>📅 Дата выдачи</label>
                     <div class="value" id="issueDate">-</div>
                 </div>
-
                 <div class="result-item">
                     <label>🔄 Статус номера</label>
                     <div class="value" id="numberStatus">-</div>
@@ -776,122 +631,97 @@
             </div>
         </div>
 
-        <!-- Тестовые данные -->
         <div class="result-section test-section" id="testSection">
             <div class="result-box" id="testResult">
                 <h2 class="section-title test-title">
                     🧪 Расширенные данные
-                    <span class="badge badge-test">PREMIUM</span>
-                </h2>                
+                    <span class="badge badge-test">PREMIUM</span>                </h2>
+                
                 <div class="info-note">
                     <strong>ℹ️ Примечание:</strong> Полная информация доступна после оплаты.
                 </div>
 
-                <!-- Контейнер для размытия с кнопкой поверх -->
                 <div class="blur-container">
                     <div class="blurred-content" id="blurredContent">
                         <div class="result-item">
                             <label>👤 ФИО</label>
                             <div class="value" id="fio">-</div>
                         </div>
-
                         <div class="result-item">
                             <label>🎂 Дата рождения</label>
                             <div class="value" id="birthDate">-</div>
                         </div>
-
                         <div class="result-item">
                             <label>🏙️ Город проживания</label>
                             <div class="value" id="city">-</div>
                         </div>
-
                         <div class="result-item">
                             <label>📍 Адрес регистрации</label>
                             <div class="value" id="address">-</div>
                         </div>
-
                         <div class="result-item">
                             <label>📧 Email</label>
                             <div class="value" id="email">-</div>
                         </div>
-
                         <div class="result-item">
                             <label>📊 Активность номера</label>
                             <div class="value" id="activity">-</div>
                         </div>
-
                         <div class="result-item">
                             <label>⚠️ Есть ли жалобы</label>
                             <div class="value" id="complaints">-</div>
                         </div>
                     </div>
 
-                    <!-- Кнопка ПОВЕРХ размытия -->
                     <div class="unblur-overlay" id="unblurOverlay">
                         <button class="unblur-button" onclick="openPayment()">
                             🔓 Получить полный доступ
                         </button>
-                        <div class="unblur-info">                            <div>Полная информация о владельце</div>
+                        <div class="unblur-info">
+                            <div>Полная информация о владельце</div>
                             <div class="price">99 ₽</div>
                             <div style="font-size: 0.85rem; margin-top: 5px; opacity: 0.8;">Единоразовая оплата за отчёт</div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>        </div>
     </div>
 
     <footer>
         <p>© 2025 PhoneInfo — Сервис номер один 🔝</p>
         <p style="font-size: 0.85rem; margin-top: 10px; opacity: 0.7;">
-            ⚠️ Сервис предоставляет информацию из открытых источников. Не является официальным запросом.
+            ⚠️ Сервис предоставляет информацию из открытых источников.
         </p>
         <p class="inn">ИНН: 227114633625</p>
     </footer>
 
-    <!-- ==================== ПЛАТЕЖНОЕ ОКНО ==================== -->
     <div class="payment-modal" id="paymentModal">
         <div class="payment-content">
             <h2>🔓 Полная разблокировка</h2>
-            <p class="description">
-                Получите полную информацию о владельце номера:<br>
-                ФИО, дата рождения, адрес, email и другие данные
-            </p>
-            
+            <p class="description">Получите полную информацию о владельце номера</p>
             <div class="price">99 ₽</div>
-            
             <div class="payment-methods">
-                <div class="payment-method">💳 Банковская карта</div>
+                <div class="payment-method">💳 Карта</div>
                 <div class="payment-method">📱 SberPay</div>
                 <div class="payment-method">💰 ЮMoney</div>
                 <div class="payment-method">📲 СБП</div>
             </div>
-            
-            <button class="pay-btn" onclick="processPayment()">
-                💳 Оплатить 99 ₽
-            </button>
-            
-            <button class="cancel-btn" onclick="closePayment()">
-                Отмена
-            </button>
-            
+            <button class="pay-btn" onclick="processPayment()">💳 Оплатить 99 ₽</button>
+            <button class="cancel-btn" onclick="closePayment()">Отмена</button>
             <div class="payment-security">
-                🔒 Безопасная оплата через ЮKassa<br>
+                🔒 Безопасная оплата<br>
                 <div class="icons">💳 🛡️ 🔐</div>
-                <div style="margin-top: 10px;">Данные защищены по стандарту PCI DSS</div>
             </div>
-        </div>    </div>
+        </div>
+    </div>
 
-    <!-- ==================== ОКНО УСПЕШНОЙ ОПЛАТЫ ==================== -->
     <div class="payment-modal" id="successModal">
         <div class="payment-content">
             <div class="success-message show">
                 <div class="success-icon">✅</div>
                 <h2>Оплата успешна!</h2>
-                <p>Спасибо за оплату. Полная информация разблокирована.</p>
-                <button class="pay-btn" onclick="closeSuccess()" style="margin-top: 20px;">
-                    Продолжить
-                </button>
+                <p>Полная информация разблокирована.</p>
+                <button class="pay-btn" onclick="closeSuccess()" style="margin-top: 20px;">Продолжить</button>
             </div>
         </div>
     </div>
@@ -903,8 +733,7 @@
             '901': { operator: 'МегаФон', region: 'Санкт-Петербург и Ленинградская область' },
             '902': { operator: 'МегаФон', region: 'Республика Карелия' },
             '903': { operator: 'МТС', region: 'Москва и Московская область' },
-            '904': { operator: 'Tele2', region: 'Нижегородская область' },
-            '905': { operator: 'МТС', region: 'Ростовская область' },
+            '904': { operator: 'Tele2', region: 'Нижегородская область' },            '905': { operator: 'МТС', region: 'Ростовская область' },
             '906': { operator: 'МТС', region: 'Воронежская область' },
             '908': { operator: 'МТС', region: 'Краснодарский край' },
             '909': { operator: 'МТС', region: 'Свердловская область' },
@@ -929,7 +758,8 @@
             '928': { operator: 'МегаФон', region: 'Республика Адыгея' },
             '929': { operator: 'МегаФон', region: 'Республика Алтай' },
             '930': { operator: 'МегаФон', region: 'Костромская область' },
-            '931': { operator: 'МегаФон', region: 'Архангельская область' },            '932': { operator: 'МегаФон', region: 'Тюменская область' },
+            '931': { operator: 'МегаФон', region: 'Архангельская область' },
+            '932': { operator: 'МегаФон', region: 'Тюменская область' },
             '933': { operator: 'МегаФон', region: 'Томская область' },
             '934': { operator: 'МегаФон', region: 'Еврейская АО' },
             '936': { operator: 'МегаФон', region: 'Республика Калмыкия' },
@@ -952,8 +782,7 @@
             '966': { operator: 'Билайн', region: 'Калужская область' },
             '967': { operator: 'Билайн', region: 'Костромская область' },
             '968': { operator: 'Билайн', region: 'Курская область' },
-            '969': { operator: 'Билайн', region: 'Липецкая область' },
-            '970': { operator: 'Tele2', region: 'Москва и Московская область' },
+            '969': { operator: 'Билайн', region: 'Липецкая область' },            '970': { operator: 'Tele2', region: 'Москва и Московская область' },
             '977': { operator: 'МТС', region: 'Москва' },
             '978': { operator: 'К-Телеком', region: 'Республика Крым' },
             '980': { operator: 'Билайн', region: 'Орловская область' },
@@ -978,7 +807,8 @@
         };
 
         // ==================== ДАННЫЕ ДЛЯ ГЕНЕРАЦИИ ====================
-        const maleData = {            firstNames: ['Aleksandr', 'Dmitriy', 'Maksim', 'Sergey', 'Andrey', 'Aleksey', 'Artem', 'Ilya', 'Kirill', 'Mikhail'],
+        const maleData = {
+            firstNames: ['Aleksandr', 'Dmitriy', 'Maksim', 'Sergey', 'Andrey', 'Aleksey', 'Artem', 'Ilya', 'Kirill', 'Mikhail'],
             lastNames: ['Ivanov', 'Petrov', 'Sidorov', 'Smirnov', 'Kuznetsov', 'Popov', 'Vasilev', 'Kozlov', 'Novikov', 'Morozov'],
             middleNames: ['Aleksandrovich', 'Dmitrievich', 'Sergeevich', 'Andreevich', 'Alekseevich', 'Ivanovich', 'Petrovich', 'Mikhailovich', 'Vladimirovich', 'Nikolaevich']
         };
@@ -1001,8 +831,7 @@
         function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
         function formatPhone(phone) {
-            const digits = phone.replace(/\D/g, '');
-            if (digits.length === 11 && (digits[0] === '7' || digits[0] === '8')) {
+            const digits = phone.replace(/\D/g, '');            if (digits.length === 11 && (digits[0] === '7' || digits[0] === '8')) {
                 return `+7 (${digits.substring(1, 4)}) ${digits.substring(4, 7)}-${digits.substring(7, 9)}-${digits.substring(9, 11)}`;
             }
             return phone;
@@ -1027,7 +856,8 @@
             return word.split('').map(char => a[char] || char).join('');
         }
 
-        function generateRandomEmail(firstNameRussian) {            const firstNameLatin = transliterate(firstNameRussian).toLowerCase();
+        function generateRandomEmail(firstNameRussian) {
+            const firstNameLatin = transliterate(firstNameRussian).toLowerCase();
             const domain = getRandomItem(emailDomains);
             const num = getRandomInt(1, 9999);
             return `${firstNameLatin}${num}@${domain}`;
@@ -1050,8 +880,7 @@
                 birthDate: generateRandomDate(new Date(1960, 0, 1), new Date(2005, 11, 31)),
                 city: city,
                 address: `г. ${city}, ${street}, д. ${house}, кв. ${apartment}`,
-                email: generateRandomEmail(firstNameRussian),
-                activity: getRandomItem(activities),
+                email: generateRandomEmail(firstNameRussian),                activity: getRandomItem(activities),
                 complaints: getRandomItem(complaintStatus)
             };
         }
@@ -1066,27 +895,17 @@
         }
 
         function processPayment() {
-            // ИМИТАЦИЯ ОПЛАТЫ (для реальной нужна интеграция с ЮKassa)
             const payBtn = document.querySelector('.pay-btn');
             payBtn.textContent = '⏳ Обработка...';
             payBtn.disabled = true;
             
-            // Имитация процесса оплаты (3 секунды)
             setTimeout(() => {
                 closePayment();
                 document.getElementById('successModal').classList.add('show');
-                
-                // После подтверждения - разблокировка                setTimeout(() => {
-                    unblurContent();
-                }, 500);
-                
+                setTimeout(() => { unblurContent(); }, 500);
                 payBtn.textContent = '💳 Оплатить 99 ₽';
                 payBtn.disabled = false;
             }, 3000);
-            
-            // ДЛЯ РЕАЛЬНОЙ ИНТЕГРАЦИИ С ЮKASSA:
-            // window.location.href = 'https://yookassa.ru/your-payment-link';
-            // Или использовать их API через backend
         }
 
         function closeSuccess() {
@@ -1100,43 +919,53 @@
             overlay.classList.add('hidden');
         }
 
-        // ==================== ПОИСК ====================
+        // ==================== ПОИСК - ГЛАВНАЯ ФУНКЦИЯ ====================
         async function searchPhone() {
+            console.log('🔍 Поиск запущен');
+            
             const phoneInput = document.getElementById('phone');
             const phone = phoneInput.value.trim();
             const loading = document.getElementById('loading');
             const legalResult = document.getElementById('legalResult');
             const testResult = document.getElementById('testResult');
             const blurredContent = document.getElementById('blurredContent');
-            const overlay = document.getElementById('unblurOverlay');
-            const error = document.getElementById('error');
+            const overlay = document.getElementById('unblurOverlay');            const error = document.getElementById('error');
             const countdownEl = document.getElementById('countdown');
 
+            // Сброс
             error.classList.remove('show');
             legalResult.classList.remove('show');
             testResult.classList.remove('show');
             blurredContent.classList.remove('unblurred');
             overlay.classList.remove('hidden');
 
+            // Валидация
             if (!phone) {
                 error.textContent = '⚠️ Введите номер телефона';
                 error.classList.add('show');
+                console.log('❌ Ошибка: нет номера');
                 return;
             }
 
             const digits = phone.replace(/\D/g, '');
-            if (digits.length < 10 || digits.length > 11) {                error.textContent = '⚠️ Введите корректный номер телефона';
+            if (digits.length < 10 || digits.length > 11) {
+                error.textContent = '⚠️ Введите корректный номер телефона';
                 error.classList.add('show');
+                console.log('❌ Ошибка: неверная длина');
                 return;
             }
 
             if (digits[0] !== '7' && digits[0] !== '8') {
                 error.textContent = '⚠️ Поддерживаются только российские номера (+7)';
                 error.classList.add('show');
+                console.log('❌ Ошибка: не российский номер');
                 return;
             }
 
+            // Показываем загрузку
             loading.classList.add('show');
+            console.log('✅ Загрузка началась');
+            
             const loadingTime = getRandomInt(5, 10);
             let remainingTime = loadingTime;
             countdownEl.textContent = remainingTime;
@@ -1149,7 +978,7 @@
             await new Promise(resolve => setTimeout(resolve, loadingTime * 1000));
             clearInterval(countdownInterval);
 
-            const operatorInfo = getOperatorInfo(phone);
+            // Получаем информацию            const operatorInfo = getOperatorInfo(phone);
             document.getElementById('legalOperator').textContent = operatorInfo.operator;
             document.getElementById('legalRegion').textContent = operatorInfo.region;
             document.getElementById('numberType').textContent = 'Мобильный';
@@ -1165,52 +994,54 @@
             document.getElementById('activity').textContent = testData.activity;
             document.getElementById('complaints').textContent = testData.complaints;
 
+            // Показываем результаты
             loading.classList.remove('show');
             legalResult.classList.add('show');
             testResult.classList.add('show');
+            console.log('✅ Результаты показаны');
 
             setTimeout(() => {
                 legalResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 100);
         }
 
-        // Маска ввода        document.getElementById('phone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 0) {
-                if (value[0] === '7' || value[0] === '8') value = value.substring(1);
-                let formattedValue = '+7';
-                if (value.length > 0) formattedValue += ' (' + value.substring(0, 3);
-                if (value.length >= 3) formattedValue += ') ' + value.substring(3, 6);
-                if (value.length >= 6) formattedValue += '-' + value.substring(6, 8);
-                if (value.length >= 8) formattedValue += '-' + value.substring(8, 10);
-                e.target.value = formattedValue;
+        // ==================== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 Страница загружена');
+            
+            // Находим кнопку и добавляем обработчик
+            const searchBtn = document.getElementById('searchBtn');
+            if (searchBtn) {
+                searchBtn.addEventListener('click', searchPhone);
+                console.log('✅ Обработчик на кнопку добавлен');
+            } else {
+                console.log('❌ Кнопка не найдена');
             }
-        });
 
-        document.getElementById('phone').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') searchPhone();
-        });
+            // Маска ввода
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    if (value[0] === '7' || value[0] === '8') value = value.substring(1);
+                    let formattedValue = '+7';
+                    if (value.length > 0) formattedValue += ' (' + value.substring(0, 3);
+                    if (value.length >= 3) formattedValue += ') ' + value.substring(3, 6);
+                    if (value.length >= 6) formattedValue += '-' + value.substring(6, 8);                    if (value.length >= 8) formattedValue += '-' + value.substring(8, 10);
+                    e.target.value = formattedValue;
+                }
+            });
 
-        // Закрытие модальных окон по клику вне
-        document.getElementById('paymentModal').addEventListener('click', function(e) {
-            if (e.target === this) closePayment();
+            // Поиск по Enter
+            phoneInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') searchPhone();
+            });
+
+            // Закрытие модальных окон
+            document.getElementById('paymentModal').addEventListener('click', function(e) {
+                if (e.target === this) closePayment();
+            });
         });
     </script>
-
-    <!-- ==================== КОД ДЛЯ РЕКЛАМНЫХ СЕТЕЙ ==================== -->
-    <!-- 
-    ДЛЯ ЯНДЕКС.ДИРЕКТ:
-    Замените блоки .ad-placeholder на код из Яндекс.Директ
-    Пример:
-    <div id="yandex_rtb_R-A-123456-1"></div>
-    <script>window.yaContextCb=window.yaContextCb||[]; yaContextCb.push(()=>{Ya.Context.AdvManager.render({renderTo:"yandex_rtb_R-A-123456-1",blockId:"R-A-123456-1"})})</script>
-    <script src="https://an.yandex.ru/system/context.js" async></script>
-    
-    ДЛЯ VK РЕКЛАМЫ:
-    Замените на код из VK Ads
-    Пример:
-    <div id="vk_ad_123456"></div>
-    <script async src="https://vk.com/js/api/ads.js"></script>
-    -->
 </body>
-  </html>
+</html>
